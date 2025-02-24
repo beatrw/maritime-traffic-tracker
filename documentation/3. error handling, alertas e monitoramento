@@ -1,0 +1,38 @@
+# Tratamento de Erros, Alertas e Monitoramento
+
+## No Apache Spark
+
+O Apache Spark pode lidar com erros potenciais nas tarefas e gerar alertas por e-mail dentro da ferramenta. Também é possível acompanhar o progresso das DAGs no Webserver.
+
+Na configuração dos argumentos do DAG:
+
+```shell
+default_args = {
+    'start_date': datetime(2024, 9, 15),
+    'email_on_failure': True,
+    'email_on_retry': True,
+    'email': ['email@email.com'],
+    'retries': 3,
+    'retry_delay': timedelta(minutes=1)
+}
+```
+
+Exemplo de email de falha:
+
+
+
+Podemos definir:
+- `start_date` - Data de início da execução da tarefa;
+- `email_on_failure` - Envio de alerta por e-mail em caso de falha;
+- `email_on_retry` - Envio de alerta por e-mail em caso de nova tentativa;
+- `email` - Destinatário dos alertas;
+- `retries` - Número máximo de tentativas;
+- `retry_delay` - Intervalo entre tentativas.
+
+Para o envio de alertas por e-mail, é necessário configurar o SMTP no `airflow.cfg` e definir as credenciais no arquivo `.env`.
+
+
+
+## Outras Ideias de Monitoramento e Alertas
+
+Para aprimorar o monitoramento das DAGs e tarefas, ferramentas externas como **Prometheus** e **Grafana** podem ser utilizadas. É possível exportar dados do ambiente `Airflow` para o Prometheus e conectá-lo ao Grafana para criar dashboards personalizados e configurar alertas.
